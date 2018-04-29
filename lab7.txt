@@ -1,0 +1,300 @@
+Lab 07: ARP, ICMP, NAT
+
+Objectives:
+Understanding ARP and using the Linux arp command 
+
+Understanding ICMP error messages 
+
+Using the ping and traceroute commands 
+
+Understanding NAT port mapping 
+
+ General instructions:
+This lab is to be done in groups of two students 
+
+Download relevant files needed for this lab, available on BodhiTree 
+
+Create a directory called <rollnumber1>_<rollnumber2>_lab07.  Also add to this directory the file report.txt. There is NO NEED to submit the pcap files for this lab. 
+
+Read the exercise fully before experimenting. 
+
+This lab has many exercises, but each exercise is rather small. Focus, to get it done on time. 
+
+Address Resolution Protocol (ARP) and ICMP [1 x 12 = 12 marks]
+For the exercises below you can use either a Linux laptop or a Linux VM guest.  For each, you will likely need to run wireshark or tcpdump to observe messages which are going on the network interface.  You may also need to use the sendUDP program.
+
+Note the IP address of your default network interface (WiFi or Ethernet, called wlan0 henceforth; replace as appropriate) which is active.  Use sendUDP to that IP address while running tcpdump. 
+
+Answer Given:
+
+ 
+
+ 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ARP message(s) is/are generated on wlan0 or lo? 
+
+Answer Given:
+
+ 
+
+  
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ICMP message(s) is/are generated on wlan0 or lo? 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Now use sendUDP to another non-existent IP address on the same subnet as wlan0.  Next use sendUDP to another existent IP address on the same subnet as wlan0.  The other existent IP address could be the default router, or your friend’s laptop’s wlan0 IP address.  You may have to guess a non-existent IP address, and conclude that it is indeed non-existent based on ARP/ICMP traffic you see (or fail to see) while running tcpdump. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ARP message(s) is/are generated on wlan0 when using sendUDP to an existent IP address? 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ICMP message(s) is/are generated on wlan0 when using sendUDP to an existent IP address? 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ARP message(s) is/are generated on wlan0 when using sendUDP to a non-existent IP address? 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ICMP message(s) is/are generated on wlan0 when using sendUDP to a non-existent IP address? 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+How exactly did you conclude that the non-existent IP address is indeed non-existent? 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Using the Linux “arp” command, observe the kernel’s ARP cache before and after using sendUDP, for the existent IP address.  Note that you can delete an existent arp entry by using the “-d” flag of the “arp” command. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Now use sendUDP to an existent IP address outside the subnet. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ARP message(s) is/are seen on wlan0?  Explain. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ICMP message(s) is/are seen on wlan0?  Explain. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Now use sendUDP to a non-existent IP address outside the subnet (you can just use a random private IP address which is NOT the same subnet as your wlan0). 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ARP message(s) is/are seen on wlan0?  Explain. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What ICMP message(s) is/are seen on wlan0?  Explain. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+The ping and traceroute tools [1+1+1+3 = 6 marks]
+For each of the questions below, you can use a Linux laptop.  You may have to run tcpdump on the default active ethernet/wireless interface (called wlan0 henceforth) to observe the traffic on the network interface.
+
+Use ping on any existent IP address in the same subnet as wlan0.  Observe and explain the ICMP traffic. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Use ping on any existent IP address outside the subnet.  Observe and explain the ICMP traffic. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Use ping on any non-existent IP address outside the subnet.  Observe and explain the ICMP traffic. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Use traceroute on any existent IP address outside the subnet.  Observe and explain the packets seen on the network interface.  Also record the traceroute output and explain the same. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+NAT routing [1+3+8=12 marks]
+For the exercises in this part, you need to use the Linux guest VM as well as the Linux/Windows/Mac host.  You may need to run tcpdump on the appropriate interfaces on the guest as well as host.  To generate traffic, you will be using the wget command as follows:
+
+wget http://www.cse.iitb.ac.in/~br/temp/networks-lab.txt
+
+To ensure that your traces are manageable and without clutter, you may want to close browser windows and other apps on your machine which may be generating network traffic.
+
+From within the Linux guest, run wget to successfully download the networks-lab.txt webpage as above. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What is the IP address of the web server?  You can observe this from the traces at the guest or the host. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+By comparing the traces collected at the host and the guest, observe the port mapping which is happening. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Now open two different terminals in the Linux guest and keep the following command ready in each:
+wget http://www.cse.iitb.ac.in/~br/temp/tmote-tools-2_0_4.zip 
+
+Note that the above file is a large file.  This is intentional, to trigger two simultaneous downloads.  Now as close in time as possible, press “enter” on both commands.  You can hit Ctrl-C on both after a few seconds; no need for either download to complete. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Observe the traces at the guest as well as at the host.  Find the relevant NAT mappings for both the downloads. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Extra fun: NAT configuration on Linux [Upto 20 HP]
+Configure one Linux machine to act as a NAT router for another.  You can use iptables for this.  You will also need to use the route command on the NAT “client”, and enable IP forwarding on the NAT router.  Generate suitable traffic to show how the configuration works.  Document the relevant steps in your report.  To get the HP, you need to show a demo to the instructor during this lab or any subsequent lab.
+
+
