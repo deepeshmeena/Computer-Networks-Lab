@@ -1,0 +1,282 @@
+Lab 06: IP Configuration, IP Packet Format, DHCP
+
+Objective:
+Meta-objective: install Linux as a virtual machine, on VirtualBox 
+
+Understand IP configuration of a Linux system: UI based as well as command-line based 
+
+Understand DHCP operation 
+
+Understand IP packet format, fragmentation 
+
+ General instructions:
+This lab is to be done in groups of two students 
+
+Download relevant files needed for this lab, available on BodhiTree 
+
+Create a directory called <rollnumber1>_<rollnumber2>_lab06.  Also add to this directory any log files collected as well as report.txt. Name the files appropriately. 
+
+Read the exercise fully before experimenting 
+
+This lab has many exercises, but each exercise is rather small. Focus, to get it done on time. 
+
+Installing Linux as a Virtual Machine [1+1=2 marks]
+Install VirtualBox on your laptop which may be running Mac or Windows or Linux
+Which version of VirtualBox did you install? 
+
+Answer Given:
+
+version 5.2.8 r121009
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Install Linux version Ubuntu 16.04 (or any version of Linux really) as a guest OS on VirtualBox
+Which version of Linux did you install as guest OS? 
+
+Answer Given:
+
+ubuntu (32 bit) 16.04 LTS 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Understanding IP Configuration of a Linux Machine [6 marks]
+Find out the IP address of the Linux guest and its netmask using the ifconfig command 
+
+Answer Given:
+
+IP address-  10.0.2.15
+
+netmask- 255.255.255.0
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Find out the IP address of the (Linux) host and its netmask using the ifconfig command 
+
+Answer Given:
+
+IP address(host) - 192.168.56.1
+
+netmask -  255.255.255.0
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Are the guest and host in the same subnet? 
+
+Answer Given:
+
+yes
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+The default configuration of the Linux guest is to use DHCP; check that this is indeed the case (on the guest or host).  See the “Edit Connections” option toward the top right corner. Describe your process of checking in one sentence. 
+
+Answer Given:
+
+Open vm virtual box manager --->   global tools --->host network manager ----> check if  dhcp server is enabled   
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+The DHCP client (on the guest or host) runs as a user-level process called dhclient.  Find its process-ID by using the command:
+ps ax | grep dhclient 
+
+Answer Given:
+
+5925
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Find the IP address of the default gateway/router of the Linux guest using the command:
+route -n 
+
+Answer Given:
+
+IP address-  10.0.2.0 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Manual IP configuration of a Linux machine from the command-line [2 marks]
+For the questions below, disable the auto-configuration in the ubuntu guest by selecting “Disconnect” in the top-right side menu
+
+Assign an IP address in the same subnet as earlier, by using the command (you may have to replace eth0 below with the correct interface name):
+sudo ifconfig eth0 <IP-addr> netmask <same-as-earlier> 
+
+Answer Given:
+
+sudo ifconfig  enp0s3 127.0.0.10 netmask 255.255.255.0
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Are you able to “ping <host-IP-addr>” ?  Likely not.  You should configure the default router/gateway entry in the forwarding table for this:
+sudo route add default gw <same-gateway-as-earlier>
+Does the ping work now? 
+
+Answer Given:
+
+no, we are not able to ping.
+
+sudo route add default gw 10.0.2.2
+
+now we are able to ping ip address (ping 192.168.56.1)
+
+ 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+DHCP operation [1+3 = 4 marks]
+For the questions below, disable the auto-configuration in the ubuntu guest by selecting “Disconnect” in the top-right side menu
+
+In the guest Linux, open a terminal and run the command (replace eth0 with appropriate interface name):
+sudo tcpdump -w dhcp-trace1.pcap -i eth0
+Now open another terminal and run “dhclient eth0”
+After you have successfully obtained an IP address, you can stop the tcpdump by pressing “Ctrl-C”. 
+
+Answer Given:
+
+command: --------    sudo tcpdump -w dhcp-trace1.pcap -i enp0s3
+
+in new terminal  run  -----------    sudo dhclient  enp0s3 
+
+OBTAINED IP address - 10.0.2.15
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Observe the various DHCP messages in tcpdump.  Explain your observations based on your understanding of DHCP. 
+
+Answer Given:
+
+in the dhcp-trac1.pcap file there are two DHCP packets one is DHCP request packet(2736 bits) and another one is DHCP ack packet(4720 bits)
+
+When a computer or other device connects to a network, the DHCP client software sends a DHCP broadcast query requesting the necessary information. Any DHCP server on the network may service the request. On receiving a DHCP request, the DHCP server may respond with specific information for each client, as previously configured by an administrator, or with a specific address and any other information valid for the entire network and for the time period for which the allocation (lease) is valid. 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+IP Header Format, IP Fragmentation [1+1+2+2=6 marks]
+Compile the given sendUDP.c using the command:
+gcc -o sendUDP sendUDP.c
+Learn the usage of the sendUDP program by running it without any arguments.  What are its arguments?  (You do not need to know/understand the contents of sendUDP.c to answer this). 
+
+Answer Given:
+
+arguments are  1. remote-host  2. pkt-size
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What is the MTU of your default ethernet/WiFi interface?  Find this out using the ifconfig command. 
+
+Answer Given:
+
+MTU SIZE :  1500 BYTES           
+
+there is an overhead of 28 bytes that you need to add to that number. 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Run tcpdump from a terminal:
+sudo tcpdump -i eth0 -w frag-trace1.pcap
+From another terminal run sendUDP with appropriate arguments so that there is NO fragmentation.  Note down your observations. 
+
+Answer Given:
+
+in the first terminal run this command :         sudo tcpdump -i enp0s3 -w frag-trace1.pcap
+
+in the second terminal run this command :       .\ sendUDP   192.168.56.1  1499 
+
+put the IP address of the localhost in the first argument and the pkt-size  SHOULD BE LESS THAN MTU SIZE.
+
+observations : there are total 5 packets ( IPv4 ,UDP, ICMP, 2 ARP)  
+
+third packet ICMP  has status  port unreachable 
+
+ 
+
+ 
+
+ 
+
+ 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Change the MTU of your default ethernet/WiFi interface by running:
+sudo ifconfig eth0 MTU <newMTU>
+Set the new MTU to say 296.
+Now repeat exercise-3 above capturing frag-trace2.pcap and creating a situation with as well as without fragmentation.  Note down your observations. 
+
+Answer Given:
+
+command:  sudo ifconfig enp0s3 1500 1000
+
+command in second termibnal : ./sendUDP 192.168.56.1 600
+
+observations :
+
+observations : there are total 4 packets ( 2 MDNS  ,UDP, ICMP)  
+
+4th  packet ICMP  has status  port unreachable 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
