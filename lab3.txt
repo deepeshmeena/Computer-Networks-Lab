@@ -1,0 +1,112 @@
+Lab 03: Tele-Communication System Design
+
+Objective:
+To design a tele-communication system and in the process get a hands-on feel for the issues involved in designing such systems. 
+
+General instructions:
+This lab is to be done in groups of four students. There are many aspects to the design, split the work accordingly and then integrate it together. Finally in the demo, I can pick on any two students as sender and any two as receivers. All should be familar with all aspects of design. 
+
+Create a directory called <rollnumber1>_<rollnumber2>_<rollnumber3>_<rollnumber4>_lab03.  Include in this directory your design document and any code you used as part of the design or evaluation. Details below. 
+
+ 
+
+ 
+
+Reference:
+
+Tele-Communication History  
+
+Goals and Metrics  
+
+http://en.wikipedia.org/wiki/History_of_telecommunication 
+
+ 
+
+Lab Instructions:
+
+Your goal in this lab is to design a tele-communication system from scratch.  You can draw inspiration from earlier systems: mechanical systems, visual systems etc. You can use torch lights or cellphone screens or even your hands or props. Let your imagination soar.
+
+ 
+
+Input to the system will be in the form of messages made of variable number of bits, which you should reliably be able to transfer to the other end. As part of the design, you will need to address many aspects, such as how do you encode the bits? How to identify beginning and end of a message block (since its variable number of bits)? How do you handle reliability? etc
+
+ 
+
+Some communication systems that lack imagination are not permitted like mail (write on a piece of paper and deliver to the other end :),  use email/ftp over available wireless/ethernet connection.  If in doubt, talk with me first before you implement it.
+
+ 
+
+You will be graded on the novelty of your design, attention to detail and overall performance of your system.
+
+ 
+
+Report:
+
+ 
+
+As part of your report, you will furnish the following:
+
+ 
+
+Design: Details of your design. Specifically how you addressed the various aspects needed for communication? Phy layer encoding, Link-layer framing,  Link-layer relaibility etc. Think carefully and put down only relevant details. Be precise and to the point.
+
+ 
+
+Implementation: Specify how you went about the implementation. If you have written any code or hacked something, provide details as well as include relevant code in the directory.
+
+ 
+
+Evaluation: A design is only as good as the paper it is written on. The final test is how well the design performs in reality. Design appropriate experiments to measure the performance of your design and perform these experiments. Document in the report the experimental setup, metric definitions, how you measured the metrics along with results obtained. One metric that should be measured is end-to-end throughput (total number of bits / time last message received – time first message generated).
+
+ 
+
+Demo:  80% of your marks are based on the demo (20% on report). So prepare and practice well.
+
+ 
+
+You have two chances to showcase your design (no exceptions).
+
+ 
+
+In a given demo (first or second chance), I will provide 2 messages of variable length (in bits), which you will need to succesfully transfer to the other end. Message lengths will be under 20 bits.  I will also mark (underline) which bits (atmost 2 bits in a message) are in error.  The receiver output needs to match the original (intended) bits and underline the bit that was in error.
+
+ 
+
+Example:  1) 0100011 and 2) 110011110011 (given to the sending team)
+
+NOTE: when you transmit, what you transmit is the exact bit sequence shown above (contains errors), but receiver needs to output 0110010 and 110010010011. If you are retransmitting, you can assume the retransmission will not contain any errors.
+
+ 
+
+I will start a timer as soon as I give the sheet to the sending team and stop the timer when I receive the receiver output from the receiver team. This is how I will measure throughput.  I will randomly pick any two students as sending team and any two as receiving team. All should be familar with all aspects of design.
+
+ 
+
+Absolutely no talking when doing the demo No contact permitted between sending and receving team other than via the communication channel. Again, you have two chances to showcase your design, no exceptions. Below grading is applied to only one (best) of the two chances.
+
+Grading: Each message carriers 30 % marks. This is binary grading. You get the message right or wrong. No partial credit. I will not entertain discussion on almost correct, most bits match etc.  Two messages account for 60% of the marks. 20% grade is for speed (this is subjective, if you are taking too much time, you will get penalized here). In any event no more than 20 min per group for both chances. 20% for report.
+
+ 
+
+Given the binary grading, its very important that you practice and practice some more. Its a team effort, one goofs up, all will suffer. Speed should be a secondary concern, getting message right should be the primary concern.
+
+ 
+
+The team with the highest throughput will win a treat :)
+
+ 
+
+ 
+
+Submission instructions
+
+The directory named  <rollnumber1>_<rollnumber2>_<rollnumber3>_<rollnumber4>_lab03 that you will submit should contain the following files:
+
+lab03.pdf (report) 
+
+Any relevant code used 
+
+ 
+
+Now tar it and upload via Bodhitree for grading.
+
