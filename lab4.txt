@@ -1,0 +1,258 @@
+Lab 04: NS3 based study of CSMA/CA (802.11) performance
+
+Objective:
+
+Understand the performance of CSMA/CA (MAC protocol employed by WiFi) in terms of system efficiency and fairness measure.
+
+General instructions:
+
+This lab is to be done in groups of two students 
+
+Download the file “lab04-student-files.tgz” and unzip it. You will find all relevant files needed for this lab in this directory. 
+
+Create a directory called <rollnumber1>_<rollnumber2>_lab04. As you proceed with the lab instructions below, note down observations or relevant output from whatever you do in a file named ”lab04.txt” using a text editor.  
+
+Also add to this directory any written code along with output files. You will find more details of this in the specific exercises. 
+
+Lab Instructions:
+
+Exercise 1:  ns3 warmup                                                [4 Marks]
+
+Download and install ns3 from scratch, or use the almost read version from: http://www.cse.iitb.ac.in/silmaril/br/ns3/ 
+
+If you use the almost ready version from the above link, you will have to run:
+tar zxvf ns-3.27.tgz
+cd ns-3.27
+./waf configure 
+
+Now you can run your first ns3 script:
+./waf --run wifi-simple-infra 
+
+Where exactly is the file wifi-simple-infra.cc located?  Find out. 
+
+Answer Given:
+
+./ns-3.27/examples/wireless/wifi-simple-infra.cc
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What pcap files are created when you run the above simulation? 
+
+Answer Given:
+
+wifi-simple-infra-0-0.pcap
+
+wifi-simple-infra-1-0.pcap
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Examine the pcap files and report at least two packet types which you can identify 
+
+Answer Given:
+
+QUIC
+
+802.11
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Learn to run wifi-simple-infra with some additional command line parameters, say the number of packets to be sent; see the comments in the file wifi-simple-infra.cc 
+
+Answer Given:
+
+ For instance, for this configuration, the physical layer will stop successfully receiving packets when rss drops below -97 dBm.
+
+ ./waf --run "wifi-simple-infra --rss=-97 --numPackets=20"
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Exercise 2:  CSMA/CA warmup      [6 Marks]
+
+Now use the script nsta-udp for the following exercises.  Run the simulation for a simulation time of 5 sec, with only one client (STA) and one AP.
+
+From the given code, find out the nature of the traffic (direction, rate, packet size) generated.  Does your observation match with your reading of the pcap files generated? 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+An output file is generated, giving the throughput achieved.  What is the throughput? 
+
+Answer Given:
+
+throughput(average of ALL 5)= 58.59738 Mbps
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Compute the app layer throughput from the receiver size pcap file.  Does it match the above reported throughput? 
+
+Answer Given:
+
+throughput computed using wireshark  protocol hierarchy = 59 Mbps
+
+yes it matches above reported throughput(approx.)
+
+ 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+From the pcap file, find out the PHY data rate of the packets 
+
+Answer Given:
+
+PHY data rate = 65 Mbps
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Assuming MAC/header overheads similar to those given in the out-of-video question, COMPUTE the theoretically expected throughput.  How does the measured throughput as above compare with the theoretically expected throughput? 
+
+Answer Given:
+
+packet size = 1472 Bytes
+
+header size = 82 Bytes
+
+throughput = (1472+82)*8 /(5.145007-5.144817) = 65.4315 Mbps
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+What’s the real time taken for simulating 5 seconds of simulation time?  Comment on the difference. 
+
+Answer Given:
+
+real time taken=5.145007 sec
+
+ 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Exercise 3:  Throughput vs NumNodes      [10 Marks]
+
+In theory, we learnt that CSMA/CA does not perform well under high load.  We are going to try and observe this through simulation now.  You might want to be smart about adjusting the UDP sending rate, as well as the simulation time, for this study.  The goal is to keep increasing the number of nodes (not necessarily in steps of 1) until the total throughput falls drastically.  We want to study the throughput for a duration of 10sec, but you may want to reduce the simulation time initially to get a hang of things.
+
+I recommend that you automate the whole process below, using a script.  Name the script as throughput-fairness.py.  Don’t forget to submit the script.  If you use gnuplot, also submit the corresponding gnuplot source files.
+
+[4 marks] Running the simulator several times, plot a graph of average total received throughput as a function of the number of nodes.  Comment on the shape of this graph.  Name your graph as throughput-numnodes.pdf (or you can generate jpg/png) 
+
+Answer Given:
+
+as we increase the number of  nodes(STA)  achieved throughput drastically decreases so shape of the graph is concave-down decreasing. 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+[4 marks] Find out the definition of the Jain fairness index.  For each simulation, compute the Jain fairness index for each 1-sec interval, on the throughput metric.  Your will be computing the fairness index across the different nodes in that simulation.  And for a particular simulation, compute the average per-sec Jain fairness index, as a function of the number of nodes.  Plot a graph fairness-1sec-numnodes.pdf showing the per-sec Jain fairness index as a function of the number of nodes.  Comment on the shape of this graph. 
+
+Answer Given:
+
+Defination: It rates the fairness of a set of values where there are n users and  x_{i} is the throughput for the ith connection. The result ranges from  {\tfrac  {1}{n}} (worst case) to 1 (best case), and it is maximum when all users receive the same allocation. This index is  {\tfrac  {k}{n}} when  k users equally share the resource, and the other n-k users receive zero allocation.
+
+This metric identifies underutilized channels and is not unduly sensitive to atypical network flow patterns.
+
+ 
+
+values range between 0.7 to 0.9 graph ranges in a small band  of 0.2
+
+ 
+
+ 
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+[2 marks] Plot a graph fairness-10sec-numnodes.pdf showing the same fairness index computed on the overall 10-sec throughput.  Comment on this graph in comparison with the 1sec fairness indices. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Exercise 4:  Loss/Delay vs NumNodes      [10 Marks]
+
+For this exercise, you can use the same simulation output as the previous exercise.  It would be near impossible to do these exercises without tshark and corresponding scripts.  Name the script as loss-delay.py.  If you use gnuplot, also submit the corresponding gnuplot source files.
+
+[4 marks] Each WiFi transmission has a bit in the header called the retry bit.  It is set whenever a frame is retransmitted.  The percentage of frames with the retry bit set is an indication of collisions in the channel.  Plot this metric as a function of the number of nodes, in file retry-numnodes.pdf.  Comment on the shape of this graph. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+[6 marks] Consider the inter-arrival time of packets at the receiver, from a particular sender.  Plot the distribution of this inter-arrival time for three different values of numNodes: 1, N, and somewhere in-between, where N is numNodes value where you received very little overall throughput in the previous exercise.  You can either use a (ranged) PDF (probability distribution function) or a CDF (cumulative distribution function) to represent the distribution.  You will have to submit one graph inter-arrival.pdf which will have 3 plots (one for each value of numNodes).  Comment on the comparison across the 3 plots within the graph. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+ 
+
+The directory named <rollnumber1>_<rollnumber2>_lab04 that you will submit should contain the following files:
+
+lab04.txt 
+
+All bash/python/gnuplot scripts 
+
+All the above mentioned graphs: PDF or jpg or png 
+
+Now tar it as follows:
+
+tar -zcvf <rollnumber1>_<rollnumber2>_lab04.tgz <rollnumber1>_<rollnumber2>_lab04/
+
+Submit the file <rollnumber1>_<rollnumber2>_lab04.tgz via bodhitree for grading.
+
