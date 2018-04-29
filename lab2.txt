@@ -1,0 +1,293 @@
+Lab 02: Understanding packet formats, delays using  tcpdump and wireshark
+
+Objectives
+
+1. Get acquainted with some commonly used networking commands and TCP/IP diagnostic tools.
+
+2. Understand delays and data-rates through trace analysis
+
+General instructions
+
+As you proceed with the lab instructions below, for each exercise, note down the answers to the exercise along with any interesting observations in the textbox under the question.
+
+Also, create a directory named by your roll number, you will add packet trace files to this directory.
+
+For each exercise I have also provided an approximate time it would take to complete. This is
+
+already a bit exaggerated, so do ensure you finish before this.
+
+In some of the exercises, I will specify a goal. You job is to design an experiment that meets the goal, conduct it and answer the questions asked.
+
+House Points
+
+You will be asked to compute various metrics below.  You can do it manually, of course.  You can get up to 30 house points, if you write a program/script to compute the metrics, given an input trace.  Hint: You need to use the tool ‘tshark’ to extract relevant packet fields from the pcap file and produce a text/csv file.
+
+Lab instructions
+
+Exercise 1: Understanding network delays through wireshark
+
+You’ve been given two packet traces - traceRemote.pcap and traceLocal.pcap
+
+Both traces are downloading the same file in two different scenarios. Using traceRemote.pcap answer the following question.
+
+Guidance: Filter the trace on ip address  128.208.3.226 - this is the server from which the file is being downloaded.
+
+Questions
+
+What is the client IP address? 
+
+Answer Given:
+
+IP ADDRESS-   10.129.5.166
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+What is the application layer protocol being used for the download?  
+
+Answer Given:
+
+HTTP(hypertext transfer protocol) because source port number is 80.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+You should find packets related to the opening of a TCP connection right in the beginning. For the  connection, there is a “handshake” happening as given below.  For each of the steps below, find the relative time from the start of the trace at which it happens. 
+
+Answer Given:
+
+Graded By:
+
+Marks Given:
+
+Comments Given:
+
+Client sends SYN (“Hello, I want to open a connection”). 
+
+Answer Given:
+
+2.509159 sec  (relative time)
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+Server sends ACK & SYN (“Fine with me, and I also want to open a connection”) 
+
+Answer Given:
+
+2.776671 sec (relative time)
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+Client replies with an ACK (“OK, Great!”) 
+
+Answer Given:
+
+2.776697 sec. (relative time)
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+Estimate the time elapsed between sending a SYN on the connection and getting an ACK back on that connection. This is a good estimate of the round trip time between this pair of source and destination. 
+
+Answer Given:
+
+2.776697-2.509159=0.267538 sec.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+The server from which the file is being downloaded is situated in Seattle, the client in Mumbai. The distance from Mumbai to Seattle (one-way) is 12500 km. What is the round trip propagation delay (i.e. delay from source to destination and back) expected at propagation speed of 2 X 10^8 m/s? 
+
+Answer Given:
+
+round trip propagation delay= 2*d/s=2*12500*1000/(2*10^8)=0.125 sec=125 ms
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+How much higher is the estimated RTT ? What do you think accounts for this difference? 
+
+Answer Given:
+
+time difference = 0.267538-0.125= 0.142538 s
+
+The difference is due to processing delay and queuing delay.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+After getting the “SYN, ACK” from the server, the client sends an ACK - what was the time elapsed between these two events? Among the delays you have learnt, what delay(s) might this elapsed time represent? 
+
+Answer Given:
+
+2.776697-2.776671=0.000026sec=0.026 ms.
+
+this delay represent processing delay.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+What is the time elapsed from starting of the connection request to getting the first packet of the file? 
+
+Answer Given:
+
+2.776816-2.509159= 0.267657 sec.
+
+This is the time difference between first SYN and first GET(http).
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 0
+
+Comments Given:
+
+3.045697 - 2.509159 = 0.536538 s = 536.538 ms
+
+Scroll down to find the packet that looks like the last packet of the file. What is the elapsed time from getting the FIRST packet of the file to the LAST packet of the file? 
+
+Answer Given:
+
+11.743801-2.776816= 8.966985 sec.
+
+ 
+
+This is the time difference between last HTTP  and first HTTP.  The file type is pdf.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+How much data was transferred for the file (estimate of the file size) ?  
+
+Answer Given:
+
+File Data: 902723 bytes.
+
+open the last HTTP packet(packet no. 1358), then open HTTP layer where we can see the file data size.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+What was the download data rate once file download started?  
+
+Answer Given:
+
+download data rate=902723bytes/8.966985sec=100671.853471 bytes per sec=0.100671 MBps=0.805368 Mbps
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+What was time taken from the sending  of the connection  request to getting the complete file (not end of connection) 
+
+Answer Given:
+
+11.743801-2.509159= 9.234642 sec 
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+What is the effective data rate for downloading the whole file (data transferred /time from starting the connection to getting the file) 
+
+Answer Given:
+
+902723 Bytes/ 9.234642 sec.=97753.97 Bytes per sec=0.097753 MBps=0.782031 Mbps
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+What is your observation regarding download data rate vs effective data rate? 
+
+Answer Given:
+
+the effective data rate is slightly smaller than download data rate.
+
+reason: effective data rate  also includes time of syn, syn ack , ack  so it is taking longer time than download data rate time  hence the speed is slightly smaller 
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+What was time taken from the beginning of the connection to end of connection? 
+
+Answer Given:
+
+12.011481-2.509159= 9.502322 sec.
+
+ 
+
+This is the difference between the time of packet no 1414 and packet no  119.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 1
+
+Comments Given:
+
+Exercise 2: Understanding network delays through wireshark through local trace
+
+Using traceLocal.pcap answer the following
+
+Repeat the above analysis (done using traceRemote.pcap) for this trace. Note that the physical distance between client and server here is < 1km.  
+
+Guidance: Server IP is 10.105.1.3
+
+Questions
+
+What were the differences between these two downloads? (Stick only to differences from the point of view of delays and data-rates, not addresses/routes/next hops etc) 
+
+Answer Given:
+
+the main difference is distance. In the first exercise distance was 12500 km and here distance is 1 km, thus propagation delay is changing and smaller in the second exercise so speed will be larger in the second exercise as compared to the first exercise.
+
+Graded By: Jadhav Tanvi Suresh TA
+
+Marks Given: 2
+
+Comments Given:
+
+Write about data rates and processing delays
